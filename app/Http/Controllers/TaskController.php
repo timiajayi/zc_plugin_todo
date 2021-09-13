@@ -194,4 +194,42 @@ class TaskController extends Controller
             'data' => $newArr
         ], 200);
     }
+    public function addTodoTask(Request $request){ 
+        $validator = $request->validate([
+            'user_id' => 'required',
+            'todo_id' => 'required',
+            'admins' => 'required'
+        ]);
+
+        $user_id = $request->user_id;
+        $admins = $request->admins;
+        $todo = $request->todo_id;
+    
+        if(in_array($user_id,$admins,)) {
+
+            return response()->json($todo->$this->TaskController->store);
+
+        } return response()->json([
+            'status' =>  false,
+            'type' => 'error',
+            'message' => 'error',
+        ], 500);                      
+    }
+    public function removeTodoTask(Request $request, $id){              
+         $validator = $request->validate([
+            'user_id' => 'required',
+            'todo_id' => 'required',
+            'admins' => 'required'
+        ]);
+
+        $user_id = $request->user_id;
+        $admins = $request->admins;
+        $todo = $request->todo_id;
+        
+        if(in_array($user_id,$admins,)) {
+
+            return response()->json($todo->$this->taskService->delete($id));
+
+        }       
+    }
 }
